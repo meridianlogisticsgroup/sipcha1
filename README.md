@@ -1,20 +1,22 @@
-# Sipcha Admin — Sleek UI + Login (Docker/Dokploy)
+# Sipcha Admin (Docker-ready, no-build frontend)
 
-### Local
+## Run locally
 ```bash
 docker compose up --build
-# http://localhost:8000
-# Login: admin@sipcha.io / admin123  (or set DEMO_PASSWORD)
+# open http://localhost:8000
+# login with: admin@sipcha.io / admin123  (override with DEMO_PASSWORD env)
 ```
 
-### Dokploy
-- Service: `web` (port 8000)
-- Health: `GET /healthz`
-- Set env vars in Dokploy UI:
+## Dokploy
+- App service: `web` (port 8000)
+- Healthcheck: `GET /healthz`
+- Set environment vars in Dokploy UI:
   - `SECRET_KEY` (required)
-  - `DEMO_PASSWORD` (optional; default `admin123`)
+  - `DEMO_PASSWORD` (optional)
+  - `FLASK_ENV=production`
+- If fronted by Traefik, add router/service labels (see `docker-compose.yml` comments).
 
-### Notes
-- No-build frontend, Tabler UI, glassmorphism, dark mode.
-- Minimal auth demo using Flask session + hashed password.
-- Replace the in-memory data with Postgres/Redis when ready.
+## Stack
+- Flask + HTMX + Alpine + Hyperscript
+- Tabler (CDN) for admin UI
+- Gunicorn (gthread) in Python 3.12-slim

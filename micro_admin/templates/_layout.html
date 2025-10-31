@@ -19,34 +19,16 @@
       filter: blur(60px) saturate(120%);
       opacity: .35; pointer-events:none; z-index:-1;
     }
-    .glass {
-      backdrop-filter: blur(12px) saturate(140%);
-      background: linear-gradient(180deg, rgba(255,255,255,.7), rgba(255,255,255,.5));
-    }
-    .theme-dark .glass {
-      background: linear-gradient(180deg, rgba(15,23,42,.7), rgba(15,23,42,.5));
-    }
+    .glass { backdrop-filter: blur(12px) saturate(140%); background: linear-gradient(180deg, rgba(255,255,255,.7), rgba(255,255,255,.5)); }
+    .theme-dark .glass { background: linear-gradient(180deg, rgba(15,23,42,.7), rgba(15,23,42,.5)); }
     .card { border-radius: 16px; }
-    .sidebar {
-      border-right: 1px solid rgba(100,116,139,.2);
-      border-top-right-radius: 16px; border-bottom-right-radius: 16px;
-      min-height: calc(100vh - 64px);
-    }
-    .brand-badge {
-      display:inline-flex; align-items:center; justify-content:center;
-      width:36px; height:36px; border-radius:10px;
-      background: linear-gradient(135deg, #22c55e, #3b82f6);
-      color:#fff; font-weight:700;
-    }
-    .avatar-initials {
-      width:32px;height:32px;border-radius:50%; display:inline-flex;align-items:center;justify-content:center;
-      background:#1e293b;color:#fff;font-weight:600;
-    }
+    .sidebar { border-right: 1px solid rgba(100,116,139,.2); border-top-right-radius: 16px; border-bottom-right-radius: 16px; min-height: calc(100vh - 64px); }
+    .brand-badge { display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:10px; background: linear-gradient(135deg, #22c55e, #3b82f6); color:#fff; font-weight:700; }
+    .avatar-initials { width:32px;height:32px;border-radius:50%; display:inline-flex;align-items:center;justify-content:center; background:#1e293b;color:#fff;font-weight:600; }
   </style>
 </head>
 <body>
   <div class="page">
-    <!-- Topbar -->
     <header class="navbar navbar-light px-0" style="height:64px">
       <div class="container-xl d-flex align-items-center">
         <div class="d-flex align-items-center gap-2">
@@ -69,12 +51,9 @@
         </div>
       </div>
     </header>
-
-    <!-- Content -->
     <div class="page-wrapper">
       <div class="container-xl my-3">
         <div class="row g-3">
-          <!-- Sidebar -->
           <aside class="col-12 col-md-3 col-xl-2" x-show="sidebar" x-transition>
             <div class="glass sidebar p-3">
               <div class="list-group list-group-transparent">
@@ -88,8 +67,6 @@
               <div class="small text-muted mt-3">v0.1 • No-build Flask + HTMX</div>
             </div>
           </aside>
-
-          <!-- Main -->
           <main :class="sidebar ? 'col-12 col-md-9 col-xl-10' : 'col-12'">
             {% include '_toasts.html' %}
             {% block content %}{% endblock %}
@@ -98,7 +75,6 @@
       </div>
     </div>
   </div>
-
   <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta21/dist/js/tabler.min.js"></script>
 </body>
 </html>

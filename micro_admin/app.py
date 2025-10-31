@@ -1,18 +1,13 @@
 import os
 from dataclasses import dataclass
 from typing import List, Dict
-from flask import (
-    Flask, render_template, request, redirect, url_for,
-    session, flash, jsonify
-)
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from functools import wraps
 from werkzeug.security import check_password_hash, generate_password_hash
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "change-me")
 
-# --- Demo users (replace with DB later) -------------------------------------
-# store hashed passwords for demo
 USERS: Dict[str, dict] = {
     "admin@sipcha.io": {
         "name": "Sipcha Admin",
@@ -34,7 +29,6 @@ def login_required(view):
         return view(*args, **kwargs)
     return wrapped
 
-# ---- Domain (replace with DB later) ---------------------------------------
 @dataclass
 class Admin:
     id: int
@@ -50,12 +44,10 @@ ADMINS: List[Admin] = [
 def _next_id(seq):
     return (max(x.id for x in seq) + 1) if seq else 1
 
-# ---- Health ---------------------------------------------------------------
 @app.get("/healthz")
 def healthz():
     return {"status": "ok"}
 
-# ---- Auth -----------------------------------------------------------------
 @app.get("/login")
 def login():
     if session.get("user"):
@@ -79,7 +71,6 @@ def logout():
     session.clear()
     return redirect(url_for("login"))
 
-# ---- Pages ----------------------------------------------------------------
 @app.get("/")
 @login_required
 def dashboard():
