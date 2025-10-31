@@ -1,0 +1,36 @@
+{% extends '_layout.html' %}
+{% import '_components.html' as ui %}
+{% set target = 'admins-table' %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header d-flex align-items-center">
+    <div class="input-group w-50">
+      <input class="form-control" name="q" placeholder="Search…" value="{{ q or '' }}"
+             hx-get="/admins/" hx-target="#{{ target }}" hx-trigger="keyup changed delay:300ms" />
+      <span class="input-group-text"><i class="ti ti-search"></i></span>
+    </div>
+    <div class="ms-auto">
+      <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create-admin">New Admin</a>
+    </div>
+  </div>
+  <div id="{{ target }}">{% include 'admins/_table.html' %}</div>
+</div>
+
+<div class="modal" id="create-admin" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header"><h5 class="modal-title">Create Admin</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form hx-post="/admins/create" hx-target="#{{ target }}" hx-swap="outerHTML"
+            _="on htmx:afterOnLoad call showToast('Created') then trigger click on .btn-close in me">
+        <div class="modal-body">{% include 'admins/_form.html' %}</div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" type="submit">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

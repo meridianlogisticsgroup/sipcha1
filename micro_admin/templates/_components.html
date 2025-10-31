@@ -1,0 +1,25 @@
+{% macro input(name, label, type='text', value='') %}
+  <div class="mb-2">
+    <label class="form-label">{{ label }}</label>
+    <input type="{{ type }}" name="{{ name }}" value="{{ value }}" class="form-control" />
+  </div>
+{% endmacro %}
+
+{% macro badge(active) %}
+  {% if active %}
+    <span class="badge bg-green">Active</span>
+  {% else %}
+    <span class="badge bg-secondary">Inactive</span>
+  {% endif %}
+{% endmacro %}
+
+{% macro actions_toggle_delete(toggle_url, delete_url, target_id) %}
+  <div class="btn-list justify-content-end">
+    <button hx-post="{{ toggle_url }}" hx-target="#{{ target_id }}" hx-swap="outerHTML" class="btn btn-outline-primary btn-sm">
+      Toggle
+    </button>
+    <button hx-post="{{ delete_url }}" hx-target="#{{ target_id }}" hx-swap="outerHTML" class="btn btn-danger btn-sm">
+      Delete
+    </button>
+  </div>
+{% endmacro %}

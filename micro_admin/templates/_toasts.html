@@ -1,0 +1,16 @@
+<div id="toast" class="position-fixed top-0 end-0 p-3" style="z-index: 1080">
+  <div id="toast-body" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" hidden>
+    <div class="d-flex">
+      <div class="toast-body"></div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" _="on click put @hidden into #toast-body"></button>
+    </div>
+  </div>
+</div>
+<script>
+  window.showToast = function (msg) {
+    const el = document.getElementById('toast-body');
+    el.querySelector('.toast-body').textContent = msg;
+    el.hidden = false;
+    setTimeout(() => { el.hidden = true; }, 1400);
+  }
+</script>

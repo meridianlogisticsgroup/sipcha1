@@ -1,0 +1,25 @@
+{% import '_components.html' as ui %}
+<table class="table table-vcenter card-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Status</th>
+      <th class="w-1"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for a in data %}
+    <tr>
+      <td>{{ a.name }}</td>
+      <td class="text-muted">{{ a.email }}</td>
+      <td>{{ ui.badge(a.active) }}</td>
+      <td>
+        {{ ui.actions_toggle_delete(url_for('admins_toggle', admin_id=a.id),
+                                    url_for('admins_delete', admin_id=a.id),
+                                    'admins-table') }}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
