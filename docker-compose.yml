@@ -3,7 +3,7 @@ services:
     build:
       context: ./micro_admin
       dockerfile: Dockerfile
-    image: sipcha-micro-admin:latest
+    image: sipcha-micro-admin:refine-theme
     environment:
       SECRET_KEY: ${SECRET_KEY:-change-me}
       DEMO_PASSWORD: ${DEMO_PASSWORD:-admin123}

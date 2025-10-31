@@ -1,18 +1,9 @@
-{% macro badge(active) %}
-  {% if active %}
-    <span class="badge bg-green">Active</span>
-  {% else %}
-    <span class="badge bg-secondary">Inactive</span>
-  {% endif %}
-{% endmacro %}
-
-{% macro actions_toggle_delete(toggle_url, delete_url, target_id) %}
-  <div class="btn-list justify-content-end">
-    <button hx-post="{{ toggle_url }}" hx-target="#{{ target_id }}" hx-swap="outerHTML" class="btn btn-outline-primary btn-sm">
-      Toggle
-    </button>
-    <button hx-post="{{ delete_url }}" hx-target="#{{ target_id }}" hx-swap="outerHTML" class="btn btn-danger btn-sm">
-      Delete
-    </button>
-  </div>
-{% endmacro %}
+{% macro status_badge(status) -%}
+  {%- set m = {
+    'Cancelled': 'badge--red',
+    'On the way': 'badge--blue',
+    'Delivered': 'badge--blue',
+    'Ready': 'badge--green'
+  } -%}
+  <span class="badge {{ m.get(status, 'badge--blue') }}">{{ status }}</span>
+{%- endmacro %}
