@@ -1,22 +1,16 @@
-# Sipcha Admin (Docker-ready, no-build frontend)
+# Sipcha Admin — No‑build Design System
 
-## Run locally
+This adds a **mini design system** on top of Tabler via a single `static/ui.css` and a set of Jinja macros in `templates/_components.html` so every page looks consistent.
+
+## Run
 ```bash
 docker compose up --build
-# open http://localhost:8000
-# login with: admin@sipcha.io / admin123  (override with DEMO_PASSWORD env)
+# http://localhost:8000
+# login: admin@sipcha.io / admin123
 ```
 
-## Dokploy
-- App service: `web` (port 8000)
-- Healthcheck: `GET /healthz`
-- Set environment vars in Dokploy UI:
-  - `SECRET_KEY` (required)
-  - `DEMO_PASSWORD` (optional)
-  - `FLASK_ENV=production`
-- If fronted by Traefik, add router/service labels (see `docker-compose.yml` comments).
-
-## Stack
-- Flask + HTMX + Alpine + Hyperscript
-- Tabler (CDN) for admin UI
-- Gunicorn (gthread) in Python 3.12-slim
+## What’s included
+- **Design tokens** (`:root` CSS variables) + dark theme overrides
+- **Unified components**: buttons, inputs, selects, textarea, switches, chips, badges, toolbar, card, table (w/ empty state), modals, tabs, pagination, alert, toast
+- **Jinja macros** so templates are uniform
+- **Examples** wired into Admins + Dashboard

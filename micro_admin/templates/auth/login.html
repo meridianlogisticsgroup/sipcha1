@@ -6,6 +6,7 @@
   <title>Sign in • Sipcha</title>
   <link href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta21/dist/css/tabler.min.css" rel="stylesheet"/>
   <link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" rel="stylesheet" />
+  <link href="{{ url_for('static', filename='ui.css') }}" rel="stylesheet" />
   <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
   <style>
     body,html{height:100%}
@@ -35,7 +36,7 @@
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
           {% for category, msg in messages %}
-          <div class="alert alert-{{ 'danger' if category=='error' else 'success' }} mb-3" role="alert">{{ msg }}</div>
+          <div class="ui-alert {{ 'ui-alert--error' if category=='error' else 'ui-alert--success' }} mb-3" role="alert">{{ msg }}</div>
           {% endfor %}
         {% endif %}
       {% endwith %}
@@ -43,17 +44,16 @@
       <form method="post" action="{{ url_for('login', next=request.args.get('next')) }}">
         <div class="mb-3">
           <label class="form-label">Email</label>
-          <input type="email" class="form-control form-control-lg" name="email" value="{{ email or '' }}" placeholder="you@domain.com" autofocus required>
+          <input type="email" class="ui-input" name="email" value="{{ email or '' }}" placeholder="you@domain.com" autofocus required>
         </div>
         <div class="mb-2">
           <label class="form-label">Password</label>
-          <div class="input-group input-group-lg">
-            <input type="password" class="form-control" name="password" placeholder="••••••••" required>
-            <span class="input-group-text"><i class="ti ti-lock"></i></span>
+          <div class="input-group">
+            <input type="password" class="ui-input" name="password" placeholder="••••••••" required>
           </div>
         </div>
         <div class="form-footer mt-4">
-          <button class="btn btn-primary w-100 btn-lg" type="submit">
+          <button class="ui-btn ui-btn--primary w-100" type="submit">
             <i class="ti ti-login me-1"></i> Sign in
           </button>
         </div>

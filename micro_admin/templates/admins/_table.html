@@ -1,25 +1,21 @@
 {% import '_components.html' as ui %}
-<table class="table table-vcenter card-table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Status</th>
-      <th class="w-1"></th>
-    </tr>
-  </thead>
-  <tbody>
+{% if data|length == 0 %}
+  {{ ui.empty_state('No admins yet', 'Create your first admin to get started.') }}
+{% else %}
+  {% set headers = ['Name','Email','Status',''] %}
+  {% set rows %}
     {% for a in data %}
-    <tr>
-      <td class="fw-semibold">{{ a.name }}</td>
-      <td class="text-muted">{{ a.email }}</td>
-      <td>{{ ui.badge(a.active) }}</td>
-      <td>
-        {{ ui.actions_toggle_delete(url_for('admins_toggle', admin_id=a.id),
-                                    url_for('admins_delete', admin_id=a.id),
-                                    'admins-table') }}
-      </td>
-    </tr>
+      <tr>
+        <td class="fw-semibold">{{ a.name }}</td>
+        <td class="text-muted">{{ a.email }}</td>
+        <td>{{ ui.badge(a.active) }}</td>
+        <td class="text-end">
+          {{ ui.actions_toggle_delete(url_for('admins_toggle', admin_id=a.id),
+                                      url_for('admins_delete', admin_id=a.id),
+                                      'admins-table') }}
+        </td>
+      </tr>
     {% endfor %}
-  </tbody>
-</table>
+  {% endset %}
+  {{ ui.table(headers, rows) }}
+{% endif %}

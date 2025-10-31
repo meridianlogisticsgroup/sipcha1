@@ -9,20 +9,9 @@ services:
       DEMO_PASSWORD: ${DEMO_PASSWORD:-admin123}
       FLASK_ENV: ${FLASK_ENV:-production}
     ports:
-      - ":8000"
+      - "8000:8000"
     healthcheck:
       test: ["CMD", "curl", "-fsS", "http://localhost:8000/healthz"]
       interval: 10s
       timeout: 3s
       retries: 3
-    deploy:
-      resources:
-        limits:
-          cpus: "1.0"
-          memory: "512M"
-    # Uncomment and edit these if using Traefik via Dokploy:
-    # labels:
-    #   - "traefik.enable=true"
-    #   - "traefik.http.routers.sipcha.rule=Host(`admin.example.com`)"
-    #   - "traefik.http.services.sipcha.loadbalancer.server.port=8000"
-    #   - "traefik.http.routers.sipcha.tls=true"
