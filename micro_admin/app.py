@@ -1,13 +1,14 @@
 import os
 from dataclasses import dataclass
 from typing import List, Dict
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session, flash, make_response
 from functools import wraps
 from werkzeug.security import check_password_hash, generate_password_hash
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "change-me")
 
+# --- Demo user ---
 USERS: Dict[str, dict] = {
     "admin@sipcha.io": {
         "name": "Sipcha Admin",
@@ -17,6 +18,14 @@ USERS: Dict[str, dict] = {
     }
 }
 
+def is_htmx():
+    return request.headers.get("HX-Request") == "true"
+
+def hx_redirect(to):
+    resp = make_response(("", 204))
+    resp.headers["HX-Redirect"] = to
+    return resp
+
 def current_user():
     email = session.get("user")
     return USERS.get(email)
@@ -25,10 +34,16 @@ def login_required(view):
     @wraps(view)
     def wrapped(*args, **kwargs):
         if not session.get("user"):
-            return redirect(url_for("login", next=request.path))
+            login_url = url_for("login", next=request.path)
+            if is_htmx():
+                r = make_response(("", 401))
+                r.headers["HX-Redirect"] = login_url
+                return r
+            return redirect(login_url)
         return view(*args, **kwargs)
     return wrapped
 
+# --- Domain ---
 @dataclass
 class Admin:
     id: int
@@ -44,10 +59,12 @@ ADMINS: List[Admin] = [
 def _next_id(seq):
     return (max(x.id for x in seq) + 1) if seq else 1
 
+# --- Health ---
 @app.get("/healthz")
 def healthz():
     return {"status": "ok"}
 
+# --- Auth ---
 @app.get("/login")
 def login():
     if session.get("user"):
@@ -64,24 +81,39 @@ def login_post():
         return render_template("auth/login.html", title="Sign in", email=email), 401
     session["user"] = email
     flash("Welcome back!", "success")
-    return redirect(request.args.get("next") or url_for("dashboard"))
+    dest = request.args.get("next") or url_for("dashboard")
+    if is_htmx():
+        return hx_redirect(dest)
+    return redirect(dest)
 
 @app.post("/logout")
 def logout():
     session.clear()
+    if is_htmx():
+        return hx_redirect(url_for("login"))
     return redirect(url_for("login"))
 
+# --- Helpers ---
+def render_page(content_template, **ctx):
+    """Return either full layout or just the fragment for #app depending on HTMX request."""
+    ctx.setdefault("user", current_user())
+    if is_htmx():
+        return render_template(content_template, **ctx)  # fragment only
+    # Full layout includes shell and pulls fragment into #app
+    return render_template("_frame.html", content_template=content_template, **ctx)
+
+# --- Pages ---
 @app.get("/")
 @login_required
 def dashboard():
-    return render_template("dashboard/index.html", title="Dashboard", user=current_user())
+    return render_page("dashboard/_page.html", title="Dashboard")
 
 @app.get("/admins/")
 @login_required
 def admins_index():
     q = (request.args.get("q") or "").strip().lower()
     data = [a for a in ADMINS if q in a.email.lower() or q in a.name.lower()] if q else ADMINS
-    return render_template("admins/index.html", data=data, q=q, title="Admins", user=current_user())
+    return render_page("admins/_page.html", data=data, q=q, title="Admins")
 
 @app.post("/admins/create")
 @login_required

@@ -1,72 +1,18 @@
-{# Unified UI components #}
-{% macro btn(label, icon=None, variant='primary', size='md', attrs='') -%}
-  {%- set cls = 'ui-btn ' + ('ui-btn--' + variant if variant else '') -%}
-  <button class="{{ cls }}" {{ attrs|safe }}>
-    {%- if icon %}<i class="ti ti-{{ icon }}"></i>{% endif -%}
-    {{- label -}}
-  </button>
-{%- endmacro %}
-
-{% macro link_btn(label, href='#', icon=None, variant='ghost') -%}
-  {%- set cls = 'ui-btn ' + ('ui-btn--' + variant if variant else '') -%}
-  <a class="{{ cls }}" href="{{ href }}">
-    {%- if icon %}<i class="ti ti-{{ icon }}"></i>{% endif -%}
-    {{- label -}}
-  </a>
-{%- endmacro %}
-
-{% macro input(name, label, type='text', value='', placeholder='') -%}
-  <div class="mb-2">
-    <label class="form-label">{{ label }}</label>
-    <input type="{{ type }}" name="{{ name }}" value="{{ value }}" placeholder="{{ placeholder }}" class="ui-input" />
-  </div>
-{%- endmacro %}
-
-{% macro select(name, label, options) -%}
-  <div class="mb-2">
-    <label class="form-label">{{ label }}</label>
-    <select name="{{ name }}" class="ui-select">
-      {% for val, text in options %}
-      <option value="{{ val }}">{{ text }}</option>
-      {% endfor %}
-    </select>
-  </div>
-{%- endmacro %}
-
-{% macro badge(active) -%}
+{% macro badge(active) %}
   {% if active %}
-    <span class="ui-badge ui-badge--ok">Active</span>
+    <span class="badge bg-green">Active</span>
   {% else %}
-    <span class="ui-badge ui-badge--muted">Inactive</span>
+    <span class="badge bg-secondary">Inactive</span>
   {% endif %}
-{%- endmacro %}
+{% endmacro %}
 
-{% macro table(headers, rows_html) -%}
-  <div class="ui-card overflow-hidden">
-    <table class="ui-table">
-      <thead>
-        <tr>
-          {% for h in headers %}<th>{{ h }}</th>{% endfor %}
-        </tr>
-      </thead>
-      <tbody>
-        {{ rows_html|safe }}
-      </tbody>
-    </table>
-  </div>
-{%- endmacro %}
-
-{% macro empty_state(title, subtitle='', icon='mood-empty') -%}
-  <div class="ui-card ui-empty">
-    <div><i class="ti ti-{{ icon }}" style="font-size:40px; opacity:.5"></i></div>
-    <div class="h4 mt-2">{{ title }}</div>
-    {% if subtitle %}<div class="text-muted">{{ subtitle }}</div>{% endif %}
-  </div>
-{%- endmacro %}
-
-{% macro actions_toggle_delete(toggle_url, delete_url, target_id) -%}
+{% macro actions_toggle_delete(toggle_url, delete_url, target_id) %}
   <div class="btn-list justify-content-end">
-    <button hx-post="{{ toggle_url }}" hx-target="#{{ target_id }}" hx-swap="outerHTML" class="ui-btn">Toggle</button>
-    <button hx-post="{{ delete_url }}" hx-target="#{{ target_id }}" hx-swap="outerHTML" class="ui-btn ui-btn--danger">Delete</button>
+    <button hx-post="{{ toggle_url }}" hx-target="#{{ target_id }}" hx-swap="outerHTML" class="btn btn-outline-primary btn-sm">
+      Toggle
+    </button>
+    <button hx-post="{{ delete_url }}" hx-target="#{{ target_id }}" hx-swap="outerHTML" class="btn btn-danger btn-sm">
+      Delete
+    </button>
   </div>
-{%- endmacro %}
+{% endmacro %}

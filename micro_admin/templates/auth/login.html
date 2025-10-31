@@ -7,58 +7,42 @@
   <link href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta21/dist/css/tabler.min.css" rel="stylesheet"/>
   <link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" rel="stylesheet" />
   <link href="{{ url_for('static', filename='ui.css') }}" rel="stylesheet" />
-  <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
-  <style>
-    body,html{height:100%}
-    body::before{
-      content:''; position:fixed; inset:0;
-      background: radial-gradient(1200px 800px at -10% -10%, #34d399 0%, transparent 60%),
-                  radial-gradient(1000px 700px at 110% 0%, #60a5fa 0%, transparent 60%),
-                  radial-gradient(800px 600px at 10% 110%, #a78bfa 0%, transparent 50%);
-      filter: blur(60px) saturate(120%);
-      opacity:.35; pointer-events:none; z-index:-1;
-    }
-    .glass { backdrop-filter: blur(14px) saturate(160%); background: linear-gradient(180deg, rgba(255,255,255,.8), rgba(255,255,255,.6)); border: 1px solid rgba(255,255,255,.4); border-radius: 20px; }
-    @media (prefers-color-scheme: dark){
-      body{background:#0b1220;color:#e5e7eb}
-      .glass{background: linear-gradient(180deg, rgba(15,23,42,.75), rgba(15,23,42,.55)); border-color: rgba(148,163,184,.2)}
-    }
-    .brand-badge{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#22c55e,#3b82f6);color:#fff;font-weight:800;}
-  </style>
 </head>
-<body class="d-flex align-items-center">
+<body class="d-flex align-items-center" style="min-height:100vh">
   <div class="container-tight py-4">
     <div class="text-center mb-4">
-      <span class="brand-badge">SC</span>
+      <span class="brand-badge" style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#22c55e,#3b82f6);color:#fff;font-weight:800;">SC</span>
       <div class="mt-2 fw-semibold">Sipcha Admin</div>
     </div>
-    <div class="glass p-4 p-md-5 mx-auto" style="max-width:420px">
-      {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-          {% for category, msg in messages %}
-          <div class="ui-alert {{ 'ui-alert--error' if category=='error' else 'ui-alert--success' }} mb-3" role="alert">{{ msg }}</div>
-          {% endfor %}
-        {% endif %}
-      {% endwith %}
-
-      <form method="post" action="{{ url_for('login', next=request.args.get('next')) }}">
-        <div class="mb-3">
-          <label class="form-label">Email</label>
-          <input type="email" class="ui-input" name="email" value="{{ email or '' }}" placeholder="you@domain.com" autofocus required>
-        </div>
-        <div class="mb-2">
-          <label class="form-label">Password</label>
-          <div class="input-group">
-            <input type="password" class="ui-input" name="password" placeholder="••••••••" required>
+    <div class="card shadow-sm border-0 mx-auto" style="max-width:420px">
+      <div class="card-body">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, msg in messages %}
+              <div class="alert alert-{{ 'danger' if category=='error' else 'success' }} mb-3" role="alert">{{ msg }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+        <form method="post" action="{{ url_for('login', next=request.args.get('next')) }}">
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control form-control-lg" name="email" value="{{ email or '' }}" placeholder="you@domain.com" autofocus required>
           </div>
-        </div>
-        <div class="form-footer mt-4">
-          <button class="ui-btn ui-btn--primary w-100" type="submit">
-            <i class="ti ti-login me-1"></i> Sign in
-          </button>
-        </div>
-      </form>
-      <div class="text-center text-muted mt-3 small">Demo: admin@sipcha.io / admin123</div>
+          <div class="mb-2">
+            <label class="form-label">Password</label>
+            <div class="input-group input-group-lg">
+              <input type="password" class="form-control" name="password" placeholder="••••••••" required>
+              <span class="input-group-text"><i class="ti ti-lock"></i></span>
+            </div>
+          </div>
+          <div class="form-footer mt-4">
+            <button class="btn btn-primary w-100 btn-lg" type="submit">
+              <i class="ti ti-login me-1"></i> Sign in
+            </button>
+          </div>
+        </form>
+        <div class="text-center text-muted mt-3 small">Demo: admin@sipcha.io / admin123</div>
+      </div>
     </div>
     <div class="text-center text-muted mt-4 small">© {{ 2025 }} Sipcha • Meridian Logistics Group</div>
   </div>
