@@ -9,7 +9,7 @@ services:
     env_file:
       - ./micro_admin/.env
     ports:
-      - "8000:8000"
+      - ":8000"
     healthcheck:
       test: ["CMD", "curl", "-fsS", "http://localhost:8000/healthz"]
       interval: 10s
