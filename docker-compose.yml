@@ -1,12 +1,13 @@
+version: "3.9"
+
 services:
   web:
     build:
       context: ./micro_admin
       dockerfile: Dockerfile
     image: micro-admin:latest
-    environment:
-      SECRET_KEY: ${SECRET_KEY:-change-me}
-      FLASK_ENV: ${FLASK_ENV:-production}
+    env_file:
+      - ./micro_admin/.env
     ports:
       - "8000:8000"
     healthcheck:
@@ -19,7 +20,7 @@ services:
         limits:
           cpus: "1.0"
           memory: "512M"
-    # If you're using Traefik via Dokploy, uncomment and set your domain:
+    # For Dokploy with Traefik, you can set labels here or in the UI
     # labels:
     #   - "traefik.enable=true"
     #   - "traefik.http.routers.micro-admin.rule=Host(`admin.example.com`)"

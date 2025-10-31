@@ -1,22 +1,20 @@
-# Micro Admin — Docker + Compose (Dokploy-friendly)
+# Sipcha Admin — Sleek UI + Login (Docker/Dokploy)
 
-## Quick start (local)
+### Local
 ```bash
 docker compose up --build
-# open http://localhost:8000
+# http://localhost:8000
+# Login: admin@sipcha.io / admin123  (or set DEMO_PASSWORD)
 ```
 
-## Dokploy notes
-- Point your Dokploy app to this repo folder.
-- Use the **web** service as your main app.
-- If using Traefik via Dokploy, add router/service labels in the UI or uncomment labels in `docker-compose.yml`.
-- Health check: `/healthz`.
+### Dokploy
+- Service: `web` (port 8000)
+- Health: `GET /healthz`
+- Set env vars in Dokploy UI:
+  - `SECRET_KEY` (required)
+  - `DEMO_PASSWORD` (optional; default `admin123`)
 
-## Image details
-- Python 3.12 slim
-- Gunicorn (gthread) with sensible defaults in `gunicorn.conf.py`
-- Non-root user
-- Exposes port 8000
-
-## Environment
-Copy `.env.example` to `.env` under `micro_admin/` and adjust as needed.
+### Notes
+- No-build frontend, Tabler UI, glassmorphism, dark mode.
+- Minimal auth demo using Flask session + hashed password.
+- Replace the in-memory data with Postgres/Redis when ready.
