@@ -1,10 +1,11 @@
-# SIPCHA Admin — Branded (Logo + Green Theme), Dark Default, Auto Twilio Sync
+# SIPCHA Admin — Branded + HashRouter (SPA), Dark Default, Auto Twilio Sync
 
-- Single container (FastAPI serves API + built SPA)
-- **Dark theme by default**, matching sipcha.io green palette
-- **Light theme** available via toggle
-- **Auto Twilio Sync Service** by friendly name (hardcoded), plus auto-create maps
-- **JSON-safe errors** + `/api/_health`
+- React + Refine + Ant Design
+- **HashRouter** (URLs like `/#/admins`) to guarantee SPA navigation without server rewrites
+- Dark theme by default with sipcha green, light toggle included
+- FastAPI serves `/api/*` + built SPA
+- Twilio Sync **auto get-or-create** by hardcoded friendly name
+- JSON-safe API errors + `/api/_health`
 
 ## Configure
 Create `.env`:
@@ -29,3 +30,10 @@ npm run dev
 cp .env.example .env
 docker compose up --build -d
 ```
+
+## Replace the logo
+Swap in your logo file at:
+```
+app/frontend/src/assets/sipcha-logo-text-right.webp
+```
+(or update the import path in `LogoTitle.jsx`). Replace `app/frontend/public/brand-favicon.png` for the favicon.

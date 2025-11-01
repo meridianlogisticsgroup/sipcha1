@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { Refine } from "@refinedev/core";
 import { notificationProvider, ThemedLayoutV2, ThemedSiderV2 } from "@refinedev/antd";
 import { ConfigProvider, App as AntApp, theme } from "antd";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { dataProvider } from "./dataProvider.js";
 import { AdminsList } from "./resources/admins/list.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
@@ -16,20 +16,8 @@ export default function Root() {
   const [dark, setDark] = useState(true);
 
   const palette = dark
-    ? {
-        primary: "#1F8A5B",
-        headerBg: "#0E1613",
-        siderBg: "#0B1210",
-        selectedBg: "rgba(31,138,91,.22)",
-        selectedColor: "#E6F6EF"
-      }
-    : {
-        primary: "#1F8A5B",
-        headerBg: "#ffffff",
-        siderBg: "#F6FEF9",
-        selectedBg: "rgba(31,138,91,.12)",
-        selectedColor: "#0F5132"
-      };
+    ? { primary: "#1F8A5B", headerBg: "#0E1613", siderBg: "#0B1210", selectedBg: "rgba(31,138,91,.22)", selectedColor: "#E6F6EF" }
+    : { primary: "#1F8A5B", headerBg: "#ffffff", siderBg: "#F6FEF9", selectedBg: "rgba(31,138,91,.12)", selectedColor: "#0F5132" };
 
   const themeConfig = useMemo(() => ({
     algorithm: dark ? theme.darkAlgorithm : theme.defaultAlgorithm,
@@ -44,25 +32,22 @@ export default function Root() {
     components: {
       Layout: { headerBg: palette.headerBg, siderBg: palette.siderBg, headerHeight: 64 },
       Menu: {
-        itemHeight: 44,
-        itemBorderRadius: 10,
-        itemMarginBlock: 6,
-        itemSelectedBg: palette.selectedBg,
-        itemSelectedColor: palette.selectedColor,
+        itemHeight: 44, itemBorderRadius: 10, itemMarginBlock: 6,
+        itemSelectedBg: palette.selectedBg, itemSelectedColor: palette.selectedColor,
       },
       Card: { paddingLG: 20, borderRadiusLG: 16 },
       Button: { controlHeight: 38, borderRadius: 12 },
       Table: { borderRadius: 12 },
       Input: { controlHeight: 38, borderRadius: 10 },
       Select: { controlHeight: 38, borderRadius: 10 },
-      Switch: { colorPrimary: palette.primary }
+      Switch: { colorPrimary: palette.primary },
     },
   }), [dark]);
 
   return (
     <ConfigProvider theme={themeConfig}>
       <AntApp>
-        <BrowserRouter>
+        <Router>
           <Refine
             dataProvider={dataProvider(API_BASE)}
             notificationProvider={notificationProvider}
@@ -94,7 +79,7 @@ export default function Root() {
               </Routes>
             </ThemedLayoutV2>
           </Refine>
-        </BrowserRouter>
+        </Router>
       </AntApp>
     </ConfigProvider>
   );
