@@ -3,8 +3,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    env_file:
-      - .env
+    environment:
+      TWILIO_ACCOUNT_SID: ${TWILIO_ACCOUNT_SID}
+      TWILIO_AUTH_TOKEN: ${TWILIO_AUTH_TOKEN}
+      TWILIO_SYNC_SERVICE_SID: ${TWILIO_SYNC_SERVICE_SID}
+      PORT: ${PORT}
+
     ports:
       - ":8080"
     restart: unless-stopped
