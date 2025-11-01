@@ -3,7 +3,7 @@ import { Refine } from "@refinedev/core";
 import { notificationProvider, ThemedLayoutV2, ThemedSiderV2, ThemedTitleV2 } from "@refinedev/antd";
 import { ConfigProvider, App as AntApp, theme } from "antd";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { dataProvider } from "./dataProvider.js";
+import { dataProvider } from "./dataProvider";
 import { AdminsList } from "./resources/admins/list.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import { HeaderActions } from "./components/HeaderActions.jsx";
