@@ -2,8 +2,16 @@ from typing import Dict, Any, Optional
 from twilio.base.page import Page
 from .deps import sync_service
 
+def ensure_map(map_name: str):
+    # Try fetch, else create
+    try:
+        sync_service.sync_maps(map_name).fetch()
+    except Exception:
+        sync_service.sync_maps.create(unique_name=map_name)
+
 class SyncMapRepo:
     def __init__(self, map_name: str):
+        ensure_map(map_name)
         self.map = sync_service.sync_maps(map_name)
 
     def list(self, page_token: Optional[str] = None, page_size: int = 50):

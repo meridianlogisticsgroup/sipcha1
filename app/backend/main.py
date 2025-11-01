@@ -1,16 +1,49 @@
 import os
 from fastapi import FastAPI, Request
-from fastapi.responses import FileResponse, Response
+from fastapi.responses import FileResponse, Response, JSONResponse
 from starlette.staticfiles import StaticFiles
 from .routers import admins, agents, numbers, settings
+from .deps import sync_service, SYNC_SERVICE_FRIENDLY_NAME
 
-app = FastAPI(title="MLG Admin API (Single Service)")
+app = FastAPI(title="SIPCHA Admin API (Single Service)")
 
+# JSON-safe error handler so SPA never sees HTML/text errors
+@app.exception_handler(Exception)
+async def all_exception_handler(request: Request, exc: Exception):
+    status = 500
+    if hasattr(exc, "status_code"):
+        status = getattr(exc, "status_code")
+    return JSONResponse(
+        status_code=status,
+        content={
+            "ok": False,
+            "error": str(exc.__class__.__name__),
+            "detail": str(exc),
+            "path": str(request.url.path),
+        },
+    )
+
+# API routes
 app.include_router(admins.router, prefix="/api")
 app.include_router(agents.router, prefix="/api")
 app.include_router(numbers.router, prefix="/api")
 app.include_router(settings.router, prefix="/api")
 
+# Health
+@app.get("/api/_health")
+def health():
+    svc = sync_service.fetch()
+    return {
+        "ok": True,
+        "service": {
+            "sid": svc.sid,
+            "friendly_name": svc.friendly_name,
+            "date_created": str(svc.date_created),
+        },
+        "friendly_name_target": SYNC_SERVICE_FRIENDLY_NAME,
+    }
+
+# Static SPA
 DIST_DIR = os.path.join(os.path.dirname(__file__), "..", "frontend", "dist")
 ASSETS_DIR = os.path.join(DIST_DIR, "assets")
 INDEX_FILE = os.path.join(DIST_DIR, "index.html")

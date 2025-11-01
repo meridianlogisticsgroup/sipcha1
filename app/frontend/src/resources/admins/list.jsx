@@ -18,6 +18,7 @@ export const AdminsList = () => {
       const values = await form.validateFields();
       create({ resource: "admins", values }, {
         onSuccess: () => { message.success("Admin created"); setDrawerOpen(false); form.resetFields(); },
+        onError: (e) => message.error(e?.detail || e?.statusText || "Create failed"),
       });
     } catch {}
   };
@@ -26,6 +27,7 @@ export const AdminsList = () => {
       const values = await form.validateFields();
       update({ resource: "admins", id: editing.id, values }, {
         onSuccess: () => { message.success("Admin updated"); setDrawerOpen(false); setEditing(null); form.resetFields(); },
+        onError: (e) => message.error(e?.detail || e?.statusText || "Update failed"),
       });
     } catch {}
   };

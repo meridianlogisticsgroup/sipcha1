@@ -3,3 +3,4 @@
 .ant-menu-item .ant-menu-item-icon { font-size: 20px; }
 .ant-menu-inline .ant-menu-item, .ant-menu-inline .ant-menu-submenu-title { line-height: 44px; height: 44px; border-radius: 10px; margin-block: 6px; }
 .ant-card { border-radius: 16px; }
+.brand-logo { display: flex; align-items: center; gap: 8px; padding: 8px 12px; }

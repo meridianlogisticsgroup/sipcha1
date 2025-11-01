@@ -1,11 +1,13 @@
-# SIPCHA Admin — FastAPI + Refine + Ant Design (Dark Default, Auto Twilio Sync)
+# SIPCHA Admin — Branded (Logo + Green Theme), Dark Default, Auto Twilio Sync
 
-- Single container: FastAPI serves `/api/*` and the built SPA.
-- **Dark theme by default** with Ant Design v5 tokens.
-- **No TWILIO_SYNC_SERVICE_SID env var.** Backend will **get-or-create** a Twilio Sync Service by a **hardcoded friendly name**.
+- Single container (FastAPI serves API + built SPA)
+- **Dark theme by default**, matching sipcha.io green palette
+- **Light theme** available via toggle
+- **Auto Twilio Sync Service** by friendly name (hardcoded), plus auto-create maps
+- **JSON-safe errors** + `/api/_health`
 
 ## Configure
-Create `.env` with:
+Create `.env`:
 ```
 TWILIO_ACCOUNT_SID=ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 TWILIO_AUTH_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
