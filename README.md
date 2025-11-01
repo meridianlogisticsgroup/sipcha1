@@ -1,7 +1,16 @@
-# SIPCHA Admin — FastAPI + Refine + Ant Design (Modern Theme)
+# SIPCHA Admin — FastAPI + Refine + Ant Design (Dark Default, Auto Twilio Sync)
 
-Single container: FastAPI serves `/api/*` and the built SPA (Vite).
-Ant Design v5 with modern tokens (Inter font, rounded radius, larger sider icons).
+- Single container: FastAPI serves `/api/*` and the built SPA.
+- **Dark theme by default** with Ant Design v5 tokens.
+- **No TWILIO_SYNC_SERVICE_SID env var.** Backend will **get-or-create** a Twilio Sync Service by a **hardcoded friendly name**.
+
+## Configure
+Create `.env` with:
+```
+TWILIO_ACCOUNT_SID=ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+TWILIO_AUTH_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+PORT=8080
+```
 
 ## Dev
 ```bash
@@ -16,6 +25,5 @@ npm run dev
 ## Docker
 ```bash
 cp .env.example .env
-# Fill TWILIO_* and leave PORT=8080
 docker compose up --build -d
 ```

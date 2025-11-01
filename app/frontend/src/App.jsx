@@ -12,7 +12,7 @@ import { TeamOutlined, PhoneOutlined, SettingOutlined, DashboardOutlined, CrownO
 const API_BASE = import.meta.env.VITE_API_BASE || "/api";
 
 export default function Root() {
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState(true);
 
   const themeConfig = useMemo(() => ({
     algorithm: dark ? theme.darkAlgorithm : theme.defaultAlgorithm,

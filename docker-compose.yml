@@ -6,7 +6,6 @@ services:
     environment:
       TWILIO_ACCOUNT_SID: ${TWILIO_ACCOUNT_SID}
       TWILIO_AUTH_TOKEN: ${TWILIO_AUTH_TOKEN}
-      TWILIO_SYNC_SERVICE_SID: ${TWILIO_SYNC_SERVICE_SID}
       PORT: 8080
     ports:
       - ":8080"
