@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Refine } from "@refinedev/core";
 import { notificationProvider, ThemedLayoutV2, ThemedSiderV2, ThemedTitleV2 } from "@refinedev/antd";
 import { ConfigProvider, App as AntApp, theme } from "antd";
@@ -13,8 +13,38 @@ const API_BASE = import.meta.env.VITE_API_BASE || "/api";
 
 export default function Root() {
   const [dark, setDark] = useState(false);
+
+  const themeConfig = useMemo(() => ({
+    algorithm: dark ? theme.darkAlgorithm : theme.defaultAlgorithm,
+    token: {
+      colorPrimary: "#6366F1", // indigo-500
+      colorInfo: "#6366F1",
+      colorLink: "#6366F1",
+      borderRadius: 12,
+      fontFamily: "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
+      controlHeight: 38,
+    },
+    components: {
+      Layout: {
+        headerBg: dark ? "#0f172a" : "#ffffff",
+        siderBg: dark ? "#0b1220" : "#0f172a0d",
+        headerHeight: 64,
+      },
+      Menu: {
+        itemHeight: 44,
+        itemBorderRadius: 10,
+        itemMarginBlock: 6,
+      },
+      Card: { paddingLG: 20, borderRadiusLG: 16 },
+      Button: { controlHeight: 38, borderRadius: 12 },
+      Table: { borderRadius: 12 },
+      Input: { controlHeight: 38, borderRadius: 10 },
+      Select: { controlHeight: 38, borderRadius: 10 },
+    },
+  }), [dark]);
+
   return (
-    <ConfigProvider theme={{ algorithm: dark ? theme.darkAlgorithm : theme.defaultAlgorithm }}>
+    <ConfigProvider theme={themeConfig}>
       <AntApp>
         <BrowserRouter>
           <Refine
@@ -31,7 +61,11 @@ export default function Root() {
           >
             <ThemedLayoutV2
               Title={({ collapsed }) => <ThemedTitleV2 text="SIPCHA Admin" collapsed={collapsed} />}
-              Header={() => <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", paddingRight: 16, height: "64px" }}><HeaderActions dark={dark} setDark={setDark} /></div>}
+              Header={() => (
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", paddingRight: 16, height: 64 }}>
+                  <HeaderActions dark={dark} setDark={setDark} />
+                </div>
+              )}
               Sider={() => <ThemedSiderV2 fixed />}
             >
               <Routes>

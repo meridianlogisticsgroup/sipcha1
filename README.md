@@ -1,22 +1,24 @@
-# Single-service Admin (FastAPI + Refine + Ant Design)
+# SIPCHA Admin — Modern Theme (FastAPI + Refine + Ant Design)
 
-**One container**: FastAPI serves the built SPA and `/api/*`.
+- Single service: FastAPI serves `/api/*` and the built SPA
+- Refine + Ant Design with modern tokens (Inter font, larger icons, smooth radius)
 
 ## Dev
 ```bash
-# Backend (dev)
 uvicorn app.backend.main:app --reload --port 8000
 
-# Frontend (dev)
 cd app/frontend
 npm i
 echo "VITE_API_BASE=http://localhost:8000/api" > .env
 npm run dev
 ```
 
-## Docker (Dokploy/Traefik-friendly)
+## Docker
 ```bash
-cp .env.example .env  # fill TWILIO_* values
+cp .env.example .env
 docker compose up --build -d
-# container listens on 8080; Traefik routes externally
 ```
+
+## Environment
+- `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_SYNC_SERVICE_SID`
+- `PORT=8080` (container)
