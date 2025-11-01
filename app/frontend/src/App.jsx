@@ -17,7 +17,7 @@ export default function Root() {
   const themeConfig = useMemo(() => ({
     algorithm: dark ? theme.darkAlgorithm : theme.defaultAlgorithm,
     token: {
-      colorPrimary: "#6366F1", // indigo-500
+      colorPrimary: "#6366F1",
       colorInfo: "#6366F1",
       colorLink: "#6366F1",
       borderRadius: 12,
@@ -25,16 +25,8 @@ export default function Root() {
       controlHeight: 38,
     },
     components: {
-      Layout: {
-        headerBg: dark ? "#0f172a" : "#ffffff",
-        siderBg: dark ? "#0b1220" : "#0f172a0d",
-        headerHeight: 64,
-      },
-      Menu: {
-        itemHeight: 44,
-        itemBorderRadius: 10,
-        itemMarginBlock: 6,
-      },
+      Layout: { headerBg: dark ? "#0f172a" : "#ffffff", siderBg: dark ? "#0b1220" : "#0f172a0d", headerHeight: 64 },
+      Menu: { itemHeight: 44, itemBorderRadius: 10, itemMarginBlock: 6 },
       Card: { paddingLG: 20, borderRadiusLG: 16 },
       Button: { controlHeight: 38, borderRadius: 12 },
       Table: { borderRadius: 12 },

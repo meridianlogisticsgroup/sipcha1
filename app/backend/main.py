@@ -6,13 +6,11 @@ from .routers import admins, agents, numbers, settings
 
 app = FastAPI(title="MLG Admin API (Single Service)")
 
-# API under /api
 app.include_router(admins.router, prefix="/api")
 app.include_router(agents.router, prefix="/api")
 app.include_router(numbers.router, prefix="/api")
 app.include_router(settings.router, prefix="/api")
 
-# Static SPA
 DIST_DIR = os.path.join(os.path.dirname(__file__), "..", "frontend", "dist")
 ASSETS_DIR = os.path.join(DIST_DIR, "assets")
 INDEX_FILE = os.path.join(DIST_DIR, "index.html")

@@ -2,7 +2,8 @@
 FROM node:20-alpine AS frontend
 WORKDIR /frontend
 COPY app/frontend/package.json app/frontend/package-lock.json* ./
-RUN npm ci || npm i
+# Avoid lockfile requirement noise
+RUN npm i --no-audit --no-fund
 COPY app/frontend ./
 RUN npm run build
 

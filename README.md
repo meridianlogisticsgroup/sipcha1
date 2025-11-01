@@ -1,7 +1,7 @@
-# SIPCHA Admin — Modern Theme (FastAPI + Refine + Ant Design)
+# SIPCHA Admin — FastAPI + Refine + Ant Design (Modern Theme)
 
-- Single service: FastAPI serves `/api/*` and the built SPA
-- Refine + Ant Design with modern tokens (Inter font, larger icons, smooth radius)
+Single container: FastAPI serves `/api/*` and the built SPA (Vite).
+Ant Design v5 with modern tokens (Inter font, rounded radius, larger sider icons).
 
 ## Dev
 ```bash
@@ -16,9 +16,6 @@ npm run dev
 ## Docker
 ```bash
 cp .env.example .env
+# Fill TWILIO_* and leave PORT=8080
 docker compose up --build -d
 ```
-
-## Environment
-- `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_SYNC_SERVICE_SID`
-- `PORT=8080` (container)
