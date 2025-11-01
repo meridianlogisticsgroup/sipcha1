@@ -1,17 +1,10 @@
 services:
-  web:
+  admin:
     build:
-      context: ./micro_admin
+      context: .
       dockerfile: Dockerfile
-    image: sipcha-micro-admin:refine-theme
-    environment:
-      SECRET_KEY: ${SECRET_KEY:-change-me}
-      DEMO_PASSWORD: ${DEMO_PASSWORD:-admin123}
-      FLASK_ENV: ${FLASK_ENV:-production}
+    env_file:
+      - .env
     ports:
-      - "8000:8000"
-    healthcheck:
-      test: ["CMD", "curl", "-fsS", "http://localhost:8000/healthz"]
-      interval: 10s
-      timeout: 3s
-      retries: 3
+      - ":8080"
+    restart: unless-stopped

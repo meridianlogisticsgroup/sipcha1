@@ -1,0 +1,5 @@
+fastapi==0.115.5
+uvicorn[standard]==0.32.0
+twilio==9.3.6
+pydantic-settings==2.5.2
+python-dotenv==1.0.1
